@@ -10,7 +10,7 @@ async function renderList(env: Env): Promise<string> {
   return items
     .map(
       (item) => `<li class="my-2">
-        <a class="block p-4 bg-gray-100 rounded" href="/pin/${item.id}">
+        <a class="block p-4 bg-gray-100 rounded pin-link" href="/pin/${item.id}" data-id="${item.id}">
           ${item.phrase} <span class="text-sm text-gray-500">(${item.count})</span>
         </a>
       </li>`
@@ -37,6 +37,18 @@ async function renderPage(env: Env): Promise<Response> {
 </form>
 <ul>${list}</ul>
 </div>
+<script>
+document.addEventListener('click', async (e) => {
+  const target = e.target;
+  if (!(target instanceof Element)) return;
+  const link = target.closest('.pin-link');
+  if (link instanceof HTMLAnchorElement) {
+    e.preventDefault();
+    await fetch(link.getAttribute('href') || '', { method: 'POST' });
+    location.reload();
+  }
+});
+</script>
 </body>
 </html>`;
   return new Response(body, { headers: { 'Content-Type': 'text/html; charset=UTF-8' } });
@@ -58,7 +70,7 @@ export default {
     }
 
     const match = url.pathname.match(/^\/pin\/(\d+)$/);
-    if (match) {
+    if (request.method === 'POST' && match) {
       const id = Number(match[1]);
       await env.DB.prepare('UPDATE pins SET count = count + 1 WHERE id = ?')
         .bind(id)
