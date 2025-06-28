@@ -1,0 +1,9 @@
+name = "pin"
+compatibility_date = "2023-12-18"
+main = "src/index.ts"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "pin"
+# Replace with your actual database_id after creating the D1 database
+database_id = ""
