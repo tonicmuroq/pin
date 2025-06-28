@@ -1,6 +1,6 @@
 # pin
 
-A simple Cloudflare Worker to pin phrases. Users can submit a sentence, click to increase its pin count, and view phrases sorted by popularity.
+A simple Cloudflare Worker to pin phrases. Users can submit a sentence, click a phrase to increase its pin count, and view phrases sorted by popularity.
 
 ## Deployment
 
