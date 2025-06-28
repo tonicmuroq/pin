@@ -25,7 +25,7 @@ These steps assume you have [Node.js](https://nodejs.org/) and [wrangler](https:
 
 4. **Apply the schema**
    ```bash
-   wrangler d1 migrations apply pin --local --file=./schema.sql
+   wrangler d1 execute pin --remote --file=./schema.sql
    ```
 
 5. **Develop locally**
@@ -35,7 +35,7 @@ These steps assume you have [Node.js](https://nodejs.org/) and [wrangler](https:
 
 6. **Deploy**
    ```bash
-   npm run deploy
+   wrangler deploy
    ```
 
 After deployment, visit the Worker URL to use the app.
