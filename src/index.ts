@@ -4,7 +4,7 @@ export interface Env {
 
 async function renderList(env: Env): Promise<string> {
   const { results } = await env.DB.prepare(
-    'SELECT id, phrase, count FROM pins ORDER BY count DESC'
+    "SELECT id, phrase, count FROM pins ORDER BY count DESC",
   ).all();
   const items = results as { id: number; phrase: string; count: number }[];
   return items
@@ -13,9 +13,9 @@ async function renderList(env: Env): Promise<string> {
         <a class="block p-4 bg-gray-100 rounded pin-link" href="/pin/${item.id}" data-id="${item.id}">
           ${item.phrase} <span class="text-sm text-gray-500">(${item.count})</span>
         </a>
-      </li>`
+      </li>`,
     )
-    .join('');
+    .join("");
 }
 
 async function renderPage(env: Env): Promise<Response> {
@@ -38,15 +38,19 @@ async function renderPage(env: Env): Promise<Response> {
 <ul>${list}</ul>
 </div>
 <script>
-function randomRainbowGradient() {
-  const colors = ['#ff0000', '#ff7f00', '#ffff00', '#00ff00', '#0000ff', '#8b00ff'];
-  const angle = Math.floor(Math.random() * 360);
-  const stops = colors.sort(() => Math.random() - 0.5);
-  return 'linear-gradient(' + angle + 'deg, ' + stops.join(', ') + ')';
+function randomSubtleGradient() {
+  const gradients = [
+    'linear-gradient(90deg, #659999, #7a8d89, #f4791f)',
+    'linear-gradient(90deg, #22c1c3, #fdbb2d)',
+    'linear-gradient(90deg, #a1c4fd, #c2e9fb)',
+    'linear-gradient(90deg, #e0c3fc, #8ec5fc)',
+    'linear-gradient(90deg, #e6e9f0, #eef1f5)'
+  ];
+  return gradients[Math.floor(Math.random() * gradients.length)];
 }
-document.body.style.background = randomRainbowGradient();
+document.body.style.background = randomSubtleGradient();
 const btn = document.querySelector("form button[type='submit']");
-if (btn) btn.style.background = randomRainbowGradient();
+if (btn) btn.style.background = randomSubtleGradient();
 document.addEventListener('click', async (e) => {
   const target = e.target;
   if (!(target instanceof Element)) return;
@@ -60,18 +64,20 @@ document.addEventListener('click', async (e) => {
 </script>
 </body>
 </html>`;
-  return new Response(body, { headers: { 'Content-Type': 'text/html; charset=UTF-8' } });
+  return new Response(body, {
+    headers: { "Content-Type": "text/html; charset=UTF-8" },
+  });
 }
 
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const url = new URL(request.url);
 
-    if (request.method === 'POST' && url.pathname === '/pin') {
+    if (request.method === "POST" && url.pathname === "/pin") {
       const form = await request.formData();
-      const phrase = form.get('phrase');
-      if (typeof phrase === 'string' && phrase.trim()) {
-        await env.DB.prepare('INSERT INTO pins (phrase, count) VALUES (?, 1)')
+      const phrase = form.get("phrase");
+      if (typeof phrase === "string" && phrase.trim()) {
+        await env.DB.prepare("INSERT INTO pins (phrase, count) VALUES (?, 1)")
           .bind(phrase.trim())
           .run();
       }
@@ -79,9 +85,9 @@ export default {
     }
 
     const match = url.pathname.match(/^\/pin\/(\d+)$/);
-    if (request.method === 'POST' && match) {
+    if (request.method === "POST" && match) {
       const id = Number(match[1]);
-      await env.DB.prepare('UPDATE pins SET count = count + 1 WHERE id = ?')
+      await env.DB.prepare("UPDATE pins SET count = count + 1 WHERE id = ?")
         .bind(id)
         .run();
       return Response.redirect(url.origin, 303);
