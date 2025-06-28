@@ -42,7 +42,7 @@ function randomRainbowGradient() {
   const colors = ['#ff0000', '#ff7f00', '#ffff00', '#00ff00', '#0000ff', '#8b00ff'];
   const angle = Math.floor(Math.random() * 360);
   const stops = colors.sort(() => Math.random() - 0.5);
-  return `linear-gradient(${angle}deg, ${stops.join(', ')})`;
+  return 'linear-gradient(' + angle + 'deg, ' + stops.join(', ') + ')';
 }
 document.body.style.background = randomRainbowGradient();
 const btn = document.querySelector("form button[type='submit']");
