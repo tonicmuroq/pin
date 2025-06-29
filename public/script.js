@@ -124,20 +124,20 @@ function App() {
       </form>
       <ul id="pin-list">
         {pins.map((item) => (
-          <li key={item.id} className="my-2">
+          <li key={item.id} className="my-2 flex pin-item">
+            {item.emoji && (
+              <span className="pin-emoji mr-2 border rounded flex items-center justify-center">
+                {item.emoji}
+              </span>
+            )}
             <a
               href="#"
-              className="flex items-center p-4 bg-gray-100 rounded pin-link"
+              className="pin-text flex-grow flex items-center p-4 bg-gray-100 rounded pin-link"
               onClick={(e) => {
                 e.preventDefault();
                 inc(item.id);
               }}
             >
-              {item.emoji && (
-                <span className="mr-2 flex items-center justify-center w-8 h-8 border rounded">
-                  {item.emoji}
-                </span>
-              )}
               <span className="flex-grow">{item.phrase}</span>
               <span className="text-sm text-gray-500 ml-2">({item.count})</span>
             </a>

@@ -1,3 +1,22 @@
 #emoji-picker button {
   line-height: 1;
 }
+
+.pin-item {
+  display: flex;
+  align-items: stretch;
+}
+
+.pin-emoji {
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pin-text {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+}
