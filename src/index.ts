@@ -1,6 +1,5 @@
 export interface Env {
   DB: D1Database;
-  ASSETS: Fetcher;
 }
 
 async function listPins(env: Env): Promise<Response> {
@@ -18,7 +17,7 @@ export default {
       return listPins(env);
     }
 
-    if (request.method === 'POST' && url.pathname === '/pin') {
+    if (request.method === 'POST' && url.pathname === '/api/pin') {
       const form = await request.formData();
       const phrase = form.get('phrase');
       const emoji = form.get('emoji');
@@ -32,7 +31,7 @@ export default {
       return new Response(null, { status: 201 });
     }
 
-    const match = url.pathname.match(/^\/pin\/(\d+)$/);
+    const match = url.pathname.match(/^\/api\/pin\/(\d+)$/);
     if (request.method === 'POST' && match) {
       const id = Number(match[1]);
       await env.DB.prepare('UPDATE pins SET count = count + 1 WHERE id = ?')
@@ -41,7 +40,6 @@ export default {
       return new Response(null, { status: 204 });
     }
 
-    // fall through to static asset fetching
-    return env.ASSETS.fetch(request);
+    return new Response('Not Found', { status: 404 });
   },
 };

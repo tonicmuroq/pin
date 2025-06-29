@@ -34,7 +34,7 @@ function App() {
     const params = new URLSearchParams();
     params.append('phrase', phrase.trim());
     if (emoji) params.append('emoji', emoji);
-    await fetch('/pin', { method: 'POST', body: params });
+    await fetch('/api/pin', { method: 'POST', body: params });
     setPhrase('');
     setEmoji('');
     setPickerOpen(false);
@@ -42,7 +42,7 @@ function App() {
   }
 
   async function inc(id) {
-    await fetch(`/pin/${id}`, { method: 'POST' });
+    await fetch(`/api/pin/${id}`, { method: 'POST' });
     await fetchPins();
   }
 
