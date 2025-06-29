@@ -87,14 +87,13 @@ function App() {
             <div
               ref={pickerRef}
               id="emoji-picker"
-              className="absolute left-0 mt-1 flex flex-wrap gap-2 p-2 bg-white border rounded shadow z-10"
-              style={{ top: '100%' }}
+              className="absolute left-0 top-full mt-1 flex flex-wrap gap-2 p-2 bg-white border rounded shadow z-10"
             >
               {emojis.map((em) => (
                 <button
                   key={em}
                   type="button"
-                  className="p-2 text-xl"
+                  className="p-2 text-xl leading-none"
                   onClick={() => {
                     setEmoji(em);
                     setPickerOpen(false);
@@ -124,7 +123,7 @@ function App() {
       </form>
       <ul id="pin-list">
         {pins.map((item) => (
-          <li key={item.id} className="my-2 flex pin-item">
+          <li key={item.id} className="my-2 flex items-stretch">
             <a
               href="#"
               className="flex w-full gap-x-2"
@@ -134,7 +133,7 @@ function App() {
               }}
             >
               {item.emoji && (
-                <div className="flex items-center justify-center px-4 py-2 border rounded bg-gray-100">
+                <div className="w-8 h-8 flex items-center justify-center mr-2 border rounded bg-gray-100">
                   {item.emoji}
                 </div>
               )}
