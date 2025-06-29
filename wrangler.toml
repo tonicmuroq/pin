@@ -2,6 +2,9 @@ name = "pin"
 compatibility_date = "2024-05-17"
 main = "src/index.ts"
 
+[assets]
+bucket = "./public"
+
 [[d1_databases]]
 binding = "DB"
 database_name = "pin"
