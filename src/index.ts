@@ -20,7 +20,7 @@ export default {
     if (request.method === 'POST' && url.pathname === '/api/pin') {
       const form = await request.formData();
       const phrase = form.get('phrase');
-      const emoji = form.get('emoji');
+      const emoji = form.get('emoji') || '';
       if (typeof phrase === 'string' && phrase.trim()) {
         await env.DB.prepare(
           'INSERT INTO pins (phrase, emoji, count) VALUES (?, ?, 1)'

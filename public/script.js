@@ -125,21 +125,23 @@ function App() {
       <ul id="pin-list">
         {pins.map((item) => (
           <li key={item.id} className="my-2 flex pin-item">
-            {item.emoji && (
-              <span className="pin-emoji mr-2 border rounded flex items-center justify-center">
-                {item.emoji}
-              </span>
-            )}
             <a
               href="#"
-              className="pin-text flex-grow flex items-center p-4 bg-gray-100 rounded pin-link"
+              className="flex w-full gap-x-2"
               onClick={(e) => {
                 e.preventDefault();
                 inc(item.id);
               }}
             >
-              <span className="flex-grow">{item.phrase}</span>
-              <span className="text-sm text-gray-500 ml-2">({item.count})</span>
+              {item.emoji && (
+                <div className="flex items-center justify-center px-4 py-2 border rounded bg-gray-100">
+                  {item.emoji}
+                </div>
+              )}
+              <div className="flex items-center justify-between flex-grow px-4 py-2 border rounded bg-gray-100">
+                <span>{item.phrase}</span>
+                <span className="text-sm text-gray-500 ml-2">({item.count})</span>
+              </div>
             </a>
           </li>
         ))}
