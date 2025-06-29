@@ -9,13 +9,15 @@ function randomSubtleGradient() {
   return gradients[Math.floor(Math.random() * gradients.length)];
 }
 
-const { useState, useEffect } = React;
+const { useState, useEffect, useRef } = React;
 
 function App() {
   const [pins, setPins] = useState([]);
   const [phrase, setPhrase] = useState('');
   const [emoji, setEmoji] = useState('');
   const [pickerOpen, setPickerOpen] = useState(false);
+  const pickerRef = useRef(null);
+  const emojiBtnRef = useRef(null);
   const emojis = ['😀', '😎', '😢', '😡', '🎉', '❤️', '👍', '🚀'];
 
   async function fetchPins() {
@@ -27,6 +29,27 @@ function App() {
     document.body.style.background = randomSubtleGradient();
     fetchPins();
   }, []);
+
+  useEffect(() => {
+    function handleClick(e) {
+      if (
+        pickerRef.current &&
+        !pickerRef.current.contains(e.target) &&
+        emojiBtnRef.current &&
+        !emojiBtnRef.current.contains(e.target)
+      ) {
+        setPickerOpen(false);
+      }
+    }
+
+    if (pickerOpen) {
+      document.addEventListener('click', handleClick);
+    }
+
+    return () => {
+      document.removeEventListener('click', handleClick);
+    };
+  }, [pickerOpen]);
 
   async function addPin(e) {
     e.preventDefault();
@@ -50,31 +73,39 @@ function App() {
     <div>
       <h1 className="text-2xl font-bold mb-4 text-center">pin</h1>
       <form onSubmit={addPin} className="mb-4 flex items-center space-x-2">
-        <button
-          type="button"
-          id="emoji-btn"
-          className="px-2 py-1 bg-gray-200 rounded"
-          onClick={() => setPickerOpen(!pickerOpen)}
-        >
-          {emoji || '+'}
-        </button>
-        {pickerOpen && (
-          <div id="emoji-picker" className="mb-2 flex flex-wrap gap-2">
-            {emojis.map((em) => (
-              <button
-                key={em}
-                type="button"
-                className="p-2 text-xl"
-                onClick={() => {
-                  setEmoji(em);
-                  setPickerOpen(false);
-                }}
-              >
-                {em}
-              </button>
-            ))}
-          </div>
-        )}
+        <div className="relative">
+          <button
+            type="button"
+            id="emoji-btn"
+            ref={emojiBtnRef}
+            className="px-2 py-2 bg-gray-200 rounded"
+            onClick={() => setPickerOpen(!pickerOpen)}
+          >
+            {emoji || '+'}
+          </button>
+          {pickerOpen && (
+            <div
+              ref={pickerRef}
+              id="emoji-picker"
+              className="absolute left-0 mt-1 flex flex-wrap gap-2 p-2 bg-white border rounded shadow z-10"
+              style={{ top: '100%' }}
+            >
+              {emojis.map((em) => (
+                <button
+                  key={em}
+                  type="button"
+                  className="p-2 text-xl"
+                  onClick={() => {
+                    setEmoji(em);
+                    setPickerOpen(false);
+                  }}
+                >
+                  {em}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
         <input
           type="text"
           value={phrase}
@@ -85,7 +116,7 @@ function App() {
         />
         <button
           type="submit"
-          className="px-4 text-white rounded"
+          className="px-4 py-2 text-white rounded"
           style={{ background: randomSubtleGradient() }}
         >
           Pin
