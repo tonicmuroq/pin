@@ -1,0 +1,2 @@
+-- Migration number: 0002 	 2025-06-29T05:02:42.114Z
+ALTER TABLE pins ADD COLUMN emoji TEXT NOT NULL DEFAULT '';
