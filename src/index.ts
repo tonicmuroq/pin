@@ -2,19 +2,16 @@ export interface Env {
   DB: D1Database;
 }
 
-async function listPins(env: Env): Promise<Response> {
-  const { results } = await env.DB.prepare(
-    'SELECT id, phrase, emoji, count FROM pins ORDER BY count DESC LIMIT 23'
-  ).all();
-  return Response.json(results);
-}
 
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const url = new URL(request.url);
 
     if (request.method === 'GET' && url.pathname === '/api/pins') {
-      return listPins(env);
+      const { results } = await env.DB.prepare(
+        'SELECT id, phrase, emoji, count FROM pins ORDER BY count DESC LIMIT 23'
+      ).all();
+      return Response.json(results);
     }
 
     if (request.method === 'POST' && url.pathname === '/api/pin') {
