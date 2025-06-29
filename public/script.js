@@ -133,7 +133,7 @@ function App() {
               }}
             >
               {item.emoji && (
-                <div className="w-8 h-8 flex items-center justify-center mr-2 border rounded bg-gray-100">
+                <div className="flex items-center justify-center px-4 py-2 border rounded bg-gray-100">
                   {item.emoji}
                 </div>
               )}
