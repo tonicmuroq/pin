@@ -127,15 +127,19 @@ function App() {
           <li key={item.id} className="my-2">
             <a
               href="#"
-              className="block p-4 bg-gray-100 rounded pin-link"
+              className="flex items-center p-4 bg-gray-100 rounded pin-link"
               onClick={(e) => {
                 e.preventDefault();
                 inc(item.id);
               }}
             >
-              {item.emoji && <span className="mr-2">{item.emoji}</span>}
-              {item.phrase + ' '}
-              <span className="text-sm text-gray-500">({item.count})</span>
+              {item.emoji && (
+                <span className="mr-2 flex items-center justify-center w-8 h-8 border rounded">
+                  {item.emoji}
+                </span>
+              )}
+              <span className="flex-grow">{item.phrase}</span>
+              <span className="text-sm text-gray-500 ml-2">({item.count})</span>
             </a>
           </li>
         ))}

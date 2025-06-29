@@ -4,7 +4,7 @@ export interface Env {
 
 async function listPins(env: Env): Promise<Response> {
   const { results } = await env.DB.prepare(
-    'SELECT id, phrase, emoji, count FROM pins ORDER BY count DESC'
+    'SELECT id, phrase, emoji, count FROM pins ORDER BY count DESC LIMIT 23'
   ).all();
   return Response.json(results);
 }
