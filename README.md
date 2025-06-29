@@ -32,6 +32,8 @@ These steps assume you have [Node.js](https://nodejs.org/) and [wrangler](https:
    ```bash
    npm start
    ```
+   The dev server is configured with `run_worker_first = ["/api/*"]` so that `/api`
+   routes are handled by the Worker.
 
 6. **Deploy**
    ```bash

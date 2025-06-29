@@ -10,3 +10,6 @@ binding = "ASSETS"
 binding = "DB"
 database_name = "pin"
 database_id = "5f0cd562-b00b-4716-9844-ab0fa3e943a8"
+
+[dev]
+run_worker_first = ["/api/*"]
